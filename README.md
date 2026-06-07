@@ -1,7 +1,5 @@
 # OIBSIP Web Development & Designing — Task 1: Pizza Delivery Application
 
-# 🍕 PizzaGo — Enterprise Full-Stack Pizza Customization & Delivery System
-
 PizzaGo is a high-fidelity, production-grade **MERN (MongoDB, Express, React, Node.js)** web application engineered for the modern food-technology sector. The application provides an interactive customer experience, featuring a dynamic visual pizza customizer, and pairs it with a comprehensive administrative console to manage orders, inventory, and automated supply chains.
 
 ---
