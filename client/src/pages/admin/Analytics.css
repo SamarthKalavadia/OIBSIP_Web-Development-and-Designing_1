@@ -1,0 +1,319 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ANALYTICS PAGE — Admin Console
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── Page Wrapper ── */
+.analytics-console {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Loading State ── */
+.analytics-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.loading-spinner {
+  font-size: 3rem;
+  animation: spinPizza 1.5s linear infinite;
+}
+
+@keyframes spinPizza {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ━━━ OVERVIEW ROW ━━━ */
+.analytics-overview-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.overview-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.overview-card span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+}
+
+.overview-card h3 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1;
+}
+
+.overview-card p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ━━━ CHARTS GRID ━━━ */
+.charts-container-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ── Chart Card ── */
+.chart-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chart-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.chart-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0 0 16px;
+}
+
+/* ── SVG Line Chart ── */
+.svg-chart-wrapper {
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  padding: 8px 4px 4px;
+}
+
+.chart-x-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 0 4px;
+}
+
+.chart-x-axis span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  flex: 1;
+}
+
+/* ── BAR CHART ── */
+.bar-chart-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  height: 180px;          /* fixed height so all bars align to the same baseline */
+  padding: 0 4px;
+  margin-top: 8px;
+}
+
+.bar-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end; /* bars grow upward from the bottom */
+  gap: 6px;
+  height: 100%;
+  position: relative;
+}
+
+.bar-tooltip {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.chart-bar {
+  width: 100%;
+  max-width: 36px;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(to top, var(--primary), var(--secondary));
+  transition: opacity 0.2s ease;
+  min-height: 4px;
+}
+
+.chart-bar:hover {
+  opacity: 0.85;
+}
+
+.bar-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ── Popular Pizzas List ── */
+.top-pizzas-analytics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.analytics-pizza-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.pizza-rank {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--primary);
+  min-width: 28px;
+  text-align: center;
+}
+
+.pizza-rank-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pizza-rank-info strong {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pizza-rank-info span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.pizza-sales-score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.pizza-sales-score strong {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.pizza-sales-score span {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+/* ── Inventory Consumption ── */
+.consumption-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.consumption-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.consumption-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.consumption-labels strong {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.consumption-labels span {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.text-danger { color: var(--danger); }
+.text-muted  { color: var(--text-secondary); }
+
+.consumption-progress-bezel {
+  height: 8px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+}
+
+.consumption-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  transition: width 0.6s ease;
+}
+
+.consumption-progress-fill.critical {
+  background: linear-gradient(to right, #ef4444, #f97316);
+}
+
+/* ━━━ RESPONSIVE ━━━ */
+@media (max-width: 1024px) {
+  .charts-container-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .analytics-overview-row {
+    grid-template-columns: 1fr;
+  }
+
+  .bar-chart-container {
+    height: 140px;
+    gap: 6px;
+  }
+
+  .analytics-console {
+    padding: 16px;
+    gap: 16px;
+  }
+}

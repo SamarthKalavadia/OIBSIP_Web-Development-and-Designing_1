@@ -1,0 +1,404 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ADMIN HOME DASHBOARD — Stylesheet
+   PizzaGo Brand Guidelines
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.admin-dashboard-home {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  animation: fadeInDash 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInDash {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading Screen styling */
+.admin-dashboard-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 20px;
+}
+
+.admin-dashboard-loading .loading-spinner {
+  font-size: 64px;
+  animation: dashSpin 2s infinite linear;
+}
+
+@keyframes dashSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.admin-dashboard-loading p {
+  color: #64748B;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* ━━━ EXECUTIVE METRIC CARDS ━━━ */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1200px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metric-card {
+  background-color: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.01);
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(229, 57, 53, 0.2);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.05);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.metric-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-badge-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background-color: #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.metric-badge-icon.warning {
+  background-color: rgba(245, 158, 11, 0.08);
+}
+
+.metric-badge-icon.success {
+  background-color: rgba(34, 197, 94, 0.08);
+}
+
+.metric-badge-icon.info {
+  background-color: rgba(14, 165, 233, 0.08);
+}
+
+.metric-badge-icon.danger {
+  background-color: rgba(239, 68, 68, 0.08);
+}
+
+.metric-value {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.metric-value.text-warn {
+  color: #F59E0B;
+}
+
+.metric-value.text-success {
+  color: #22C55E;
+}
+
+.metric-value.text-danger {
+  color: #EF4444;
+}
+
+.metric-trend {
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trend-up {
+  color: #22C55E;
+}
+
+.trend-down {
+  color: #EF4444;
+}
+
+.trend-arrow {
+  font-weight: 800;
+}
+
+/* Alert Card Pulse */
+.alert-card.active-alert {
+  border-color: rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.02);
+}
+
+.animate-pulse {
+  animation: pulseAlert 2s infinite;
+}
+
+@keyframes pulseAlert {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.7; }
+}
+
+/* ━━━ WIDGET LAYOUTS ━━━ */
+.dashboard-widgets-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 992px) {
+  .dashboard-widgets-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.widget-card {
+  background-color: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.01);
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.widget-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.widget-action-link {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.widget-action-link:hover {
+  text-decoration: underline;
+}
+
+/* Live Orders Table */
+.widget-table-wrapper {
+  overflow-x: auto;
+}
+
+.widget-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.widget-table th {
+  padding: 12px 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.widget-table td {
+  padding: 16px;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 0.88rem;
+}
+
+.widget-table tr:last-child td {
+  border-bottom: none;
+}
+
+.customer-info-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-info-cell strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.customer-info-cell span {
+  font-size: 0.72rem;
+  color: #64748B;
+}
+
+.build-info-cell {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.table-price-cell {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Status Badges */
+.status-dot-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.status-dot-badge.status-order-placed {
+  background-color: rgba(245, 158, 11, 0.08);
+  color: #F59E0B;
+}
+
+.status-dot-badge.status-order-received {
+  background-color: rgba(14, 165, 233, 0.08);
+  color: #0EA5E9;
+}
+
+.status-dot-badge.status-in-the-kitchen {
+  background-color: rgba(139, 92, 246, 0.08);
+  color: #8B5CF6;
+}
+
+.status-dot-badge.status-sent-to-delivery {
+  background-color: rgba(236, 72, 153, 0.08);
+  color: #EC4899;
+}
+
+.status-dot-badge.status-delivered {
+  background-color: rgba(34, 197, 94, 0.08);
+  color: #22C55E;
+}
+
+/* Empty States */
+.widget-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.widget-empty span {
+  font-size: 44px;
+  margin-bottom: 12px;
+}
+
+.widget-empty p {
+  font-size: 0.88rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.widget-empty.success-state span {
+  color: #22C55E;
+}
+
+/* Alert Warnings List */
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.stock-alert-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: rgba(239, 68, 68, 0.02);
+  border: 1px solid rgba(239, 68, 68, 0.08);
+  border-radius: 8px;
+  gap: 14px;
+}
+
+.alert-emoji {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+  border: 1px solid #E2E8F0;
+}
+
+.alert-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.alert-details strong {
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.alert-details span {
+  font-size: 0.72rem;
+  color: #64748B;
+  text-transform: capitalize;
+}
+
+.alert-quantity-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.alert-quantity-badge strong {
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.alert-quantity-badge span {
+  font-size: 0.65rem;
+  color: #64748B;
+  font-weight: 600;
+  text-transform: uppercase;
+}

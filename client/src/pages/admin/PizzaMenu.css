@@ -1,0 +1,494 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PIZZA RECIPE CATALOG — Stylesheet
+   PizzaGo Brand Guidelines
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.pizza-menu-console {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  animation: fadeInMenuPage 0.4s ease-out;
+}
+
+@keyframes fadeInMenuPage {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading screen */
+.menu-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 20px;
+}
+
+.menu-loading .loading-spinner {
+  font-size: 64px;
+  animation: recipeSpin 2.5s infinite linear;
+}
+
+@keyframes recipeSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.menu-loading p {
+  color: #64748B;
+  font-weight: 600;
+}
+
+/* ━━━ CONTROLS BAR ━━━ */
+.menu-controls-bar {
+  background-color: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.01);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.menu-category-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748B;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-tab:hover {
+  background-color: #F8FAFC;
+  color: var(--text-primary);
+}
+
+.filter-tab.active {
+  background-color: var(--brand-soft);
+  color: var(--brand);
+}
+
+.add-pizza-btn {
+  background-color: var(--brand);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 10px rgba(229, 57, 53, 0.12);
+}
+
+.add-pizza-btn:hover {
+  background-color: var(--hover);
+}
+
+/* ━━━ RECIPES GRID ━━━ */
+.menu-recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 1200px) {
+  .menu-recipes-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-recipes-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* ━━━ PIZZA CARD ━━━ */
+.pizza-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pizza-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(229, 57, 53, 0.1);
+}
+
+/* Disabled styling */
+.pizza-card.recipe-disabled {
+  background-color: #FAFBFD;
+}
+.pizza-card.recipe-disabled .pizza-card-img {
+  filter: grayscale(80%) opacity(60%);
+}
+
+/* Category Badge */
+.category-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(8px);
+}
+.badge-veg {
+  background: rgba(34, 197, 94, 0.12); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.25);
+}
+.badge-nonveg {
+  background: rgba(239, 68, 68, 0.12); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.25);
+}
+.badge-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.badge-veg .badge-dot { background: #16a34a; box-shadow: 0 0 6px rgba(34, 197, 94, 0.4); }
+.badge-nonveg .badge-dot { background: #dc2626; box-shadow: 0 0 6px rgba(239, 68, 68, 0.4); }
+
+/* Card Image */
+.pizza-card-img-wrap {
+  width: 100%;
+  padding-top: 72%;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fef7f3 0%, #fff5ee 100%);
+}
+.pizza-card-img {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pizza-card:hover .pizza-card-img { transform: scale(1.08); }
+
+/* Card Body */
+.pizza-card-body {
+  padding: 22px 24px 24px;
+  display: flex; flex-direction: column; flex-grow: 1;
+}
+
+/* Rating */
+.pizza-card-rating {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 10px;
+}
+.stars-row { display: flex; gap: 1px; }
+.star { font-size: 0.85rem; line-height: 1; }
+.star-full { color: #f59e0b; }
+.star-half { color: #f59e0b; opacity: 0.5; }
+.rating-value { font-size: 0.82rem; font-weight: 700; color: #64748B; margin-left: 4px; }
+
+/* Name */
+.pizza-card-name {
+  font-size: 1.2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; line-height: 1.3;
+}
+
+/* Description */
+.pizza-card-desc {
+  font-size: 0.88rem; color: #64748B; line-height: 1.55; flex-grow: 1; margin-bottom: 20px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* Footer */
+.pizza-card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 16px; border-top: 1px solid #E2E8F0;
+}
+.pizza-card-price {
+  font-size: 1.4rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px;
+}
+
+/* Availability tag */
+.availability-tag {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600;
+  padding: 5px 12px; border-radius: 20px;
+}
+.availability-tag.available { background: rgba(34, 197, 94, 0.08); color: #16a34a; }
+.availability-tag.unavailable { background: rgba(239, 68, 68, 0.08); color: #dc2626; }
+.avail-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+.availability-tag.available .avail-dot { background: #16a34a; box-shadow: 0 0 6px rgba(34, 197, 94, 0.5); }
+.availability-tag.unavailable .avail-dot { background: #dc2626; }
+
+/* ━━━ TOGGLE SWITCH ━━━ */
+.availability-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+}
+
+.saas-toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.saas-toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.saas-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #CBD5E1;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 24px;
+}
+
+.saas-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.saas-toggle-switch input:checked + .saas-toggle-slider {
+  background-color: #22C55E;
+}
+
+.saas-toggle-switch input:checked + .saas-toggle-slider:before {
+  transform: translateX(20px);
+}
+
+/* Card Actions */
+.recipe-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.recipe-action-btn {
+  flex: 1;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #64748B;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.recipe-action-btn:hover {
+  background-color: #E2E8F0;
+  color: var(--text-primary);
+}
+
+.recipe-action-btn.edit:hover {
+  color: var(--brand);
+  border-color: rgba(229, 57, 53, 0.25);
+}
+
+.recipe-action-btn.delete:hover {
+  color: var(--danger);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+/* Empty State */
+.menu-empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  background-color: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+}
+
+.menu-empty-state span {
+  font-size: 56px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.menu-empty-state h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.menu-empty-state p {
+  font-size: 0.85rem;
+  color: #64748B;
+}
+
+/* ━━━ SLIDE-OUT RECIPE DRAWER ━━━ */
+.menu-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menu-drawer {
+  width: 460px;
+  max-width: 100%;
+  background-color: #ffffff;
+  height: 100vh;
+  box-shadow: -10px 0 30px rgba(15, 23, 42, 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: slideMenuDrawer 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideMenuDrawer {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.menu-drawer-header {
+  padding: 24px;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-drawer-header h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.menu-drawer-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #64748B;
+  cursor: pointer;
+}
+
+.menu-drawer-close:hover {
+  color: var(--text-primary);
+}
+
+.menu-drawer-form {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+}
+
+.menu-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.menu-form-group label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+}
+
+.menu-form-group input, 
+.menu-form-group textarea, 
+.menu-form-group select {
+  background-color: #ffffff;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.menu-form-group input:focus, 
+.menu-form-group textarea:focus, 
+.menu-form-group select:focus {
+  border-color: var(--brand);
+  outline: none;
+  box-shadow: 0 0 10px rgba(229, 57, 53, 0.05);
+}
+
+.menu-drawer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.menu-submit-btn {
+  background-color: var(--brand);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.15);
+}
+
+.menu-submit-btn:hover {
+  background-color: var(--hover);
+}
+
+.menu-cancel-btn {
+  background-color: #F1F5F9;
+  color: #64748B;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid #E2E8F0;
+}
+
+.menu-cancel-btn:hover {
+  background-color: #E2E8F0;
+  color: var(--text-primary);
+}

@@ -1,0 +1,488 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ORDER MANAGEMENT — SaaS Panel Styling
+   PizzaGo Brand Guidelines
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.orders-console {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeInOrders 0.4s ease-out;
+}
+
+@keyframes fadeInOrders {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading Screen */
+.orders-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 20px;
+}
+
+.orders-loading .loading-spinner {
+  font-size: 64px;
+  animation: spinOrders 2s infinite linear;
+}
+
+@keyframes spinOrders {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.orders-loading p {
+  color: #64748B;
+  font-weight: 600;
+}
+
+/* ━━━ CONTROLS BAR ━━━ */
+.orders-action-bar {
+  background-color: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.01);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.status-tabs-container {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #F1F5F9;
+  padding-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.status-tab-btn {
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748B;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-tab-btn:hover {
+  background-color: #F8FAFC;
+  color: var(--text-primary);
+}
+
+.status-tab-btn.active {
+  background-color: var(--brand-soft);
+  color: var(--brand);
+}
+
+.status-count {
+  font-size: 0.7rem;
+  font-weight: 800;
+  background-color: #F1F5F9;
+  color: #64748B;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.status-tab-btn.active .status-count {
+  background-color: var(--brand);
+  color: #ffffff;
+}
+
+/* Controls search */
+.orders-controls-row {
+  display: flex;
+  align-items: center;
+}
+
+.orders-search {
+  position: relative;
+  width: 100%;
+}
+
+.orders-search input {
+  width: 100%;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 10px 12px 10px 38px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.orders-search input:focus {
+  background-color: #ffffff;
+  border-color: rgba(229, 57, 53, 0.3);
+  outline: none;
+}
+
+/* ━━━ TABLE LAYOUT ━━━ */
+.orders-table-container {
+  background-color: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.01);
+  overflow: hidden;
+}
+
+.orders-table-wrapper {
+  overflow-x: auto;
+}
+
+.saas-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.saas-orders-table th {
+  padding: 14px 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #E2E8F0;
+  background-color: #F8FAFC;
+}
+
+.saas-orders-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #F1F5F9;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.saas-orders-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.saas-orders-table tbody tr:hover {
+  background-color: #F8FAFC;
+}
+
+/* Order ID */
+.order-id-badge {
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #64748B;
+  background-color: #F1F5F9;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* Customer details */
+.order-customer-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-customer-cell strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.order-customer-cell span {
+  font-size: 0.72rem;
+  color: #64748B;
+}
+
+/* Pizza recipe cell */
+.order-pizza-cell {
+  display: flex;
+  flex-direction: column;
+  max-width: 280px;
+}
+
+.order-pizza-cell strong {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.order-pizza-cell span {
+  font-size: 0.78rem;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.order-toppings-sub {
+  font-size: 0.72rem !important;
+  color: #94A3B8 !important;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.order-price-val {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+/* Payment Status Badges */
+.payment-status-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.payment-status-badge.paid {
+  background-color: rgba(34, 197, 94, 0.08);
+  color: #16A34A;
+}
+
+.payment-status-badge.cod {
+  background-color: rgba(245, 158, 11, 0.08);
+  color: #D97706;
+}
+
+/* Order Date cell */
+.order-date-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-date-cell span {
+  font-weight: 600;
+}
+
+.order-date-cell small {
+  font-size: 0.72rem;
+  color: #64748B;
+  margin-top: 1px;
+}
+
+/* Status Select Dropdown styling */
+.status-select-wrapper {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  text-align: center;
+}
+
+.badge-placed { background-color: rgba(245, 158, 11, 0.08); color: #F59E0B; }
+.badge-received { background-color: rgba(14, 165, 233, 0.08); color: #0EA5E9; }
+.badge-kitchen { background-color: rgba(139, 92, 246, 0.08); color: #8B5CF6; }
+.badge-delivery { background-color: rgba(236, 72, 153, 0.08); color: #EC4899; }
+.badge-delivered { background-color: rgba(34, 197, 94, 0.08); color: #22C55E; }
+
+.status-dropdown-select {
+  background-color: #ffffff;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.status-dropdown-select:focus {
+  border-color: var(--brand);
+  outline: none;
+}
+
+/* View Details Action */
+.view-order-details-btn {
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-order-details-btn:hover {
+  background-color: #E2E8F0;
+  color: var(--text-primary);
+}
+
+/* Pagination styles */
+.orders-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: #F8FAFC;
+  border-top: 1px solid #E2E8F0;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Empty State */
+.orders-empty-state {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.orders-empty-state span {
+  font-size: 56px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.orders-empty-state h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.orders-empty-state p {
+  font-size: 0.85rem;
+  color: #64748B;
+}
+
+/* ━━━ DETAILS MODAL ━━━ */
+.order-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.order-detail-card {
+  width: 500px;
+  max-width: 100%;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalScaleUp {
+  from { transform: scale(0.9) opacity: 0; }
+  to { transform: scale(1) opacity: 1; }
+}
+
+.detail-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-card-header h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.detail-close-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #94A3B8;
+  cursor: pointer;
+}
+
+.detail-close-btn:hover {
+  color: var(--text-primary);
+}
+
+.detail-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-customer-box, 
+.detail-pizza-box, 
+.detail-summary-box {
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.detail-card-body h4 {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #64748B;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.detail-customer-box p, 
+.detail-pizza-box li {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.detail-customer-box p:last-child {
+  margin-bottom: 0;
+}
+
+.detail-pizza-box ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.detail-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.detail-summary-row:last-child {
+  margin-bottom: 0;
+}
+
+.detail-summary-row span {
+  font-weight: 600;
+  color: #64748B;
+}
+
+.detail-summary-row strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.detail-card-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #E2E8F0;
+  display: flex;
+  justify-content: flex-end;
+}
