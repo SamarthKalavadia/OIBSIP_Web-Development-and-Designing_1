@@ -1,4 +1,4 @@
-# Oasis Infobyte (OIBSIP) — Web Development & Designing
+# OIBSIP Web Development & Designing — Task 1: Pizza Delivery Application
 
 # 🍕 PizzaGo — Enterprise Full-Stack Pizza Customization & Delivery System
 
