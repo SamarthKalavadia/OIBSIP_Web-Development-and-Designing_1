@@ -12,6 +12,7 @@ export const logoutUser = () => API.post('/auth/logout');
 export const verifyEmail = (token) => API.get(`/auth/verify-email/${token}`);
 export const forgotPassword = (data) => API.post('/auth/forgot-password', data);
 export const resetPassword = (token, data) => API.post(`/auth/reset-password/${token}`, data);
+export const resendVerification = (data) => API.post('/auth/resend-verification', data);
 export const getMe = () => API.get('/auth/me');
 
 // Pizza menu

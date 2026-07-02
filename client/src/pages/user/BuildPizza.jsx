@@ -11,6 +11,35 @@ const STEPS = [
   { id: 4, title: 'Fresh Toppings', key: 'toppings', icon: '🥬', desc: 'Add veggies and meats' }
 ];
 
+// Preview layer mappings based on names (Cloudinary URL logic from original)
+const cloudinaryBase = 'https://res.cloudinary.com/ddn1qjenm/image/upload/pizzonex/builder';
+
+const getLayerUrl = (type, name) => {
+  if (!name) return null;
+  
+  const formatName = (n) => {
+    const lowercase = n.toLowerCase().trim();
+    if (lowercase === 'bbq') return 'bbq-sauce';
+    if (lowercase === 'hot sauce') return 'buffalo';
+    if (lowercase === 'gouda') return 'cheddar';
+    if (lowercase === 'vegan cheese') return 'mozzarella';
+    return lowercase.replace(/\s+/g, '-');
+  };
+
+  const formatted = formatName(name);
+  
+  const folderMap = {
+    base: 'bases',
+    sauce: 'sauces',
+    cheese: 'cheese',
+    veggies: 'veggies',
+    meats: 'meat'
+  };
+  
+  const folder = folderMap[type] || type;
+  return `${cloudinaryBase}/${folder}/${formatted}.png`;
+};
+
 const BuildPizza = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -51,6 +80,22 @@ const BuildPizza = () => {
           veggies: [],
           meats: []
         });
+
+        // Preload all assets in the background to completely remove customization latency
+        const preload = (type, name) => {
+          const url = getLayerUrl(type, name);
+          if (url) {
+            const img = new Image();
+            img.src = url;
+          }
+        };
+
+        basesRes.data.forEach(item => preload('base', item.name));
+        saucesRes.data.forEach(item => preload('sauce', item.name));
+        cheesesRes.data.forEach(item => preload('cheese', item.name));
+        veggiesRes.data.forEach(item => preload('veggies', item.name));
+        meatsRes.data.forEach(item => preload('meats', item.name));
+
       } catch (err) {
         toast.error('Failed to load pizza options');
       } finally {
@@ -125,35 +170,6 @@ const BuildPizza = () => {
     );
   }
 
-  // Preview layer mappings based on names (Cloudinary URL logic from original)
-  const cloudinaryBase = 'https://res.cloudinary.com/ddn1qjenm/image/upload/pizzonex/builder';
-  
-  const getLayerUrl = (type, name) => {
-    if (!name) return null;
-    
-    const formatName = (n) => {
-      const lowercase = n.toLowerCase().trim();
-      if (lowercase === 'bbq') return 'bbq-sauce';
-      if (lowercase === 'hot sauce') return 'buffalo';
-      if (lowercase === 'gouda') return 'cheddar';
-      if (lowercase === 'vegan cheese') return 'mozzarella';
-      return lowercase.replace(/\s+/g, '-');
-    };
-
-    const formatted = formatName(name);
-    
-    const folderMap = {
-      base: 'bases',
-      sauce: 'sauces',
-      cheese: 'cheese',
-      veggies: 'veggies',
-      meats: 'meat'
-    };
-    
-    const folder = folderMap[type] || type;
-    return `${cloudinaryBase}/${folder}/${formatted}.png`;
-  };
-
   const currentStepData = STEPS.find(s => s.id === currentStep);
 
   return (
@@ -175,7 +191,7 @@ const BuildPizza = () => {
                     src={getLayerUrl('base', selection.base.name)} 
                     className="pizza-layer pizza-layer-base" 
                     alt="base" 
-                    key={`base-${selection.base._id}`} 
+                    key="pizza-layer-base" 
                   />
                 )}
                 {selection.sauce && (
@@ -183,7 +199,7 @@ const BuildPizza = () => {
                     src={getLayerUrl('sauce', selection.sauce.name)} 
                     className="pizza-layer pizza-layer-sauce" 
                     alt="sauce" 
-                    key={`sauce-${selection.sauce._id}`} 
+                    key="pizza-layer-sauce" 
                   />
                 )}
                 {selection.cheese && (
@@ -191,7 +207,7 @@ const BuildPizza = () => {
                     src={getLayerUrl('cheese', selection.cheese.name)} 
                     className="pizza-layer pizza-layer-cheese" 
                     alt="cheese" 
-                    key={`cheese-${selection.cheese._id}`} 
+                    key="pizza-layer-cheese" 
                   />
                 )}
                 

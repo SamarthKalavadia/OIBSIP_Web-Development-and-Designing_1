@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { verifyEmail } from '../../services/api';
 import './Auth.css';
 
@@ -7,6 +7,7 @@ const VerifyEmail = () => {
   const { token } = useParams();
   const [status, setStatus] = useState('loading');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const verify = async () => {
@@ -14,13 +15,18 @@ const VerifyEmail = () => {
         const { data } = await verifyEmail(token);
         setMessage(data.message);
         setStatus('success');
+        
+        // Redirect to login after 3 seconds
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
       } catch (err) {
         setMessage(err.response?.data?.message || 'Verification failed');
         setStatus('error');
       }
     };
     verify();
-  }, [token]);
+  }, [token, navigate]);
 
   return (
     <div className="auth-page">
@@ -34,6 +40,11 @@ const VerifyEmail = () => {
         {status !== 'loading' && (
           <>
             <div className={`auth-message ${status}`}>{message}</div>
+            {status === 'success' && (
+              <p style={{ fontSize: '14px', color: '#888', marginTop: '10px', textAlign: 'center' }}>
+                Redirecting to login in 3 seconds...
+              </p>
+            )}
             <div className="auth-links">
               <Link to="/login">Go to Login</Link>
             </div>
@@ -45,3 +56,4 @@ const VerifyEmail = () => {
 };
 
 export default VerifyEmail;
+

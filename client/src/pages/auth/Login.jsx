@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { loginUser } from '../../services/api';
+import { loginUser, resendVerification } from '../../services/api';
 import { toast } from 'react-toastify';
 import './Auth.css';
 
@@ -9,11 +9,14 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState(null);
+  const [resending, setResending] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUnverifiedEmail(null);
     setLoading(true);
     try {
       const { data } = await loginUser({ email, password });
@@ -21,9 +24,28 @@ const Login = () => {
       toast.success('Welcome back! 🍕');
       navigate(data.user.role === 'admin' ? '/admin' : '/dashboard');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Login failed');
+      const errData = err.response?.data;
+      if (errData?.needsVerification) {
+        // Show resend button for unverified accounts
+        setUnverifiedEmail(errData.email || email);
+        toast.error('Please verify your email before logging in.');
+      } else {
+        toast.error(errData?.message || 'Login failed');
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    setResending(true);
+    try {
+      const { data } = await resendVerification({ email: unverifiedEmail });
+      toast.success(data.message || 'Verification email sent!');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to resend email.');
+    } finally {
+      setResending(false);
     }
   };
 
@@ -34,6 +56,23 @@ const Login = () => {
           <img src="/images/phero.png" alt="PizzaGo" className="auth-logo-img" />
           <p>Sign in to your account</p>
         </div>
+
+        {unverifiedEmail && (
+          <div className="auth-message error" style={{ marginBottom: '16px' }}>
+            <p style={{ margin: '0 0 10px 0' }}>
+              📧 Your email <strong>{unverifiedEmail}</strong> is not verified yet.
+            </p>
+            <button
+              id="resend-verification-btn"
+              className="btn btn-secondary"
+              style={{ width: '100%', fontSize: '14px', padding: '10px' }}
+              onClick={handleResendVerification}
+              disabled={resending}
+            >
+              {resending ? 'Sending...' : '🔁 Resend Verification Email'}
+            </button>
+          </div>
+        )}
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
@@ -62,3 +101,4 @@ const Login = () => {
 };
 
 export default Login;
+

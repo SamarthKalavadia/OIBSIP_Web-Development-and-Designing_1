@@ -3,9 +3,13 @@ const createTransporter = require('../config/email');
 const sendEmail = async ({ to, subject, html }) => {
   try {
     const transporter = await createTransporter();
+    if (!transporter) {
+      console.warn(`📧 Email service unconfigured or offline. Bypassed sending to ${to} (Subject: ${subject})`);
+      return { skipped: true };
+    }
 
     const info = await transporter.sendMail({
-      from: `"PizzaCraft 🍕" <${process.env.EMAIL_USER}>`,
+      from: `"PizzaGo 🍕" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,
@@ -20,3 +24,4 @@ const sendEmail = async ({ to, subject, html }) => {
 };
 
 module.exports = sendEmail;
+

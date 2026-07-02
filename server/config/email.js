@@ -9,27 +9,37 @@ const createTransporter = async () => {
   const port = parseInt(process.env.EMAIL_PORT, 10) || 465;
   const secure = process.env.EMAIL_SECURE === 'true' || port === 465;
 
-  transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  const user = process.env.EMAIL_USER;
+  const pass = process.env.EMAIL_PASS;
 
-  // Verify connection
+  // Gracefully handle missing or placeholder credentials
+  if (!user || user === 'your_email@example.com' || !pass || pass === 'your_email_password') {
+    console.warn('⚠️ Email credentials are not configured or are using placeholders. Email sending will be bypassed.');
+    return null;
+  }
+
   try {
+    transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure,
+      auth: {
+        user,
+        pass,
+      },
+    });
+
+    // Verify connection
     await transporter.verify();
-    console.log(`📧 SMTP ready — sending as ${process.env.EMAIL_USER}`);
+    console.log(`📧 SMTP ready — sending as ${user}`);
   } catch (err) {
-    console.error('📧 SMTP connection failed:', err.message);
+    console.warn('📧 SMTP connection failed. Email sending will be bypassed:', err.message);
     transporter = null;
-    throw err;
+    return null;
   }
 
   return transporter;
 };
 
 module.exports = createTransporter;
+
