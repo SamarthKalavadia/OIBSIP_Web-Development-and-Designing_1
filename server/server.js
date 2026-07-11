@@ -18,26 +18,54 @@ const Inventory = require('./models/Inventory');
 
 const app = express();
 
+// Trust proxy for secure cookies behind reverse proxies (like Render)
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 // Middleware
-app.use(cors({ origin: true, credentials: true }));
+const allowedOrigins = [
+  'https://pizza-8raef2je6-samarths-projects-d716b84a.vercel.app',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173'
+];
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
+app.use(cors({ 
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }, 
+  credentials: true 
+}));
 app.use(express.json());
 
 // Session config
+if (!process.env.MONGO_URI) {
+  throw new Error('Database configuration error: MONGO_URI environment variable is missing.');
+}
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'pizzago-secret-key-12345',
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/pizza-delivery',
+    mongoUrl: process.env.MONGO_URI,
     collectionName: 'sessions'
   }),
   cookie: {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     httpOnly: true,
-    secure: false, // Set to true if using HTTPS
-    sameSite: 'lax'
+    secure: process.env.NODE_ENV === 'production', // true if using HTTPS/production
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
   }
 }));
+
 
 // Routes
 app.use('/api/auth', authRoutes);

@@ -4,10 +4,11 @@ require('dotenv').config();
 
 const addPizza = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/PizzaGoDB', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const mongoUri = process.env.MONGO_URI;
+    if (!mongoUri) {
+      throw new Error('Database configuration error: MONGO_URI environment variable is missing.');
+    }
+    await mongoose.connect(mongoUri);
     
     console.log('Connected to DB');
     

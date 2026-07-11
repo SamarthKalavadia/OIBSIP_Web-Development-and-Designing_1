@@ -2,11 +2,7 @@ const createTransporter = require('../config/email');
 
 const sendEmail = async ({ to, subject, html }) => {
   try {
-    const transporter = await createTransporter();
-    if (!transporter) {
-      console.warn(`📧 Email service unconfigured or offline. Bypassed sending to ${to} (Subject: ${subject})`);
-      return { skipped: true };
-    }
+    const transporter = createTransporter();
 
     const info = await transporter.sendMail({
       from: `"PizzaGo 🍕" <${process.env.EMAIL_USER}>`,
@@ -18,7 +14,7 @@ const sendEmail = async ({ to, subject, html }) => {
     console.log(`📧 Email sent to ${to}: ${info.messageId}`);
     return info;
   } catch (error) {
-    console.error('Email send error:', error.message);
+    console.error(`📧 Email send error to ${to}:`, error.message);
     throw error;
   }
 };

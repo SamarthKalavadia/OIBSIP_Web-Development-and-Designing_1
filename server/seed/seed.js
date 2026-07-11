@@ -38,7 +38,10 @@ const items = [
 
 const seedData = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/pizza-delivery';
+    const mongoUri = process.env.MONGO_URI;
+    if (!mongoUri) {
+      throw new Error('Database configuration error: MONGO_URI environment variable is missing.');
+    }
     await mongoose.connect(mongoUri);
     console.log('Connected to MongoDB for seeding...');
     const adminExists = await User.findOne({ email: 'admin@gmail.com' });
