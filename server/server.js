@@ -24,29 +24,37 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Middleware
-const allowedOrigins = [
-  'https://pizza-8raef2je6-samarths-projects-d716b84a.vercel.app',
-  'http://localhost:5173',
-  'http://127.0.0.1:5173'
-];
-if (process.env.FRONTEND_URL) {
-  allowedOrigins.push(process.env.FRONTEND_URL);
-}
-
-// Normalize all allowed origins by removing trailing slashes
-const cleanOrigins = allowedOrigins.map(url => url.replace(/\/$/, ''));
-
 app.use(cors({ 
   origin: (origin, callback) => {
-    const incomingOrigin = origin ? origin.replace(/\/$/, '') : '';
-    if (!origin || cleanOrigins.includes(incomingOrigin) || process.env.NODE_ENV !== 'production') {
+    // Allow requests with no origin (e.g. server-to-server, postman)
+    if (!origin) return callback(null, true);
+
+    const incomingOrigin = origin.replace(/\/$/, '');
+
+    // 1. Local development origins
+    const isLocalhost = incomingOrigin === 'http://localhost:5173' || incomingOrigin === 'http://127.0.0.1:5173';
+
+    // 2. Configured frontend URL
+    const configuredFrontend = process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/$/, '') : '';
+    const isConfiguredFrontend = configuredFrontend && incomingOrigin === configuredFrontend;
+
+    // 3. Dynamic Vercel preview/deployment URLs for Samarth's project
+    const isVercelDeployment = incomingOrigin.endsWith('.vercel.app') && 
+      (incomingOrigin.includes('samarths-projects') || incomingOrigin.includes('pizza'));
+
+    // 4. Non-production development bypass
+    const isDev = process.env.NODE_ENV !== 'production';
+
+    if (isLocalhost || isConfiguredFrontend || isVercelDeployment || isDev) {
       callback(null, true);
     } else {
-      console.warn(`⚠️ CORS blocked origin: "${origin}". Allowed clean origins:`, cleanOrigins);
+      console.warn(`⚠️ CORS blocked origin: "${origin}".`);
       callback(new Error('Not allowed by CORS'));
     }
   }, 
-  credentials: true 
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'X-Requested-With', 'Accept']
 }));
 app.use(express.json());
 

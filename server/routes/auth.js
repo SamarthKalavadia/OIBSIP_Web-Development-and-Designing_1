@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
       verificationExpires,
     });
 
-    const frontendUrl = process.env.FRONTEND_URL || 'https://pizza-8raef2je6-samarths-projects-d716b84a.vercel.app';
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     const verificationLink = `${frontendUrl}/verify-email/${verificationToken}`;
 
     const html = `
@@ -184,7 +184,7 @@ router.post('/resend-verification', async (req, res) => {
     user.verificationExpires = verificationExpires;
     await user.save();
 
-    const frontendUrl = process.env.FRONTEND_URL || 'https://pizza-8raef2je6-samarths-projects-d716b84a.vercel.app';
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     const verificationLink = `${frontendUrl}/verify-email/${verificationToken}`;
 
     const html = `
@@ -302,7 +302,7 @@ router.post('/forgot-password', async (req, res) => {
     user.resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour
     await user.save();
 
-    const frontendUrl = process.env.FRONTEND_URL || 'https://pizza-8raef2je6-samarths-projects-d716b84a.vercel.app';
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     const resetLink = `${frontendUrl}/reset-password/${resetToken}`;
 
     const html = `
