@@ -33,11 +33,16 @@ if (process.env.FRONTEND_URL) {
   allowedOrigins.push(process.env.FRONTEND_URL);
 }
 
+// Normalize all allowed origins by removing trailing slashes
+const cleanOrigins = allowedOrigins.map(url => url.replace(/\/$/, ''));
+
 app.use(cors({ 
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+    const incomingOrigin = origin ? origin.replace(/\/$/, '') : '';
+    if (!origin || cleanOrigins.includes(incomingOrigin) || process.env.NODE_ENV !== 'production') {
       callback(null, true);
     } else {
+      console.warn(`⚠️ CORS blocked origin: "${origin}". Allowed clean origins:`, cleanOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   }, 
