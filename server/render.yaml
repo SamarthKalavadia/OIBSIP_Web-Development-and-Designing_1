@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: pizza-delivery-server
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    envVars:
+      - key: PORT
+      - key: MONGO_URI
+      - key: SESSION_SECRET
+      - key: RAZORPAY_KEY_ID
+      - key: RAZORPAY_KEY_SECRET
+      - key: EMAIL_HOST
+      - key: EMAIL_PORT
+      - key: EMAIL_SECURE
+      - key: EMAIL_USER
+      - key: EMAIL_PASS
+      - key: EMAIL_FROM
+      - key: EMAIL_SERVICE

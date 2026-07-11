@@ -20,17 +20,18 @@ const createTransporter = () => {
     },
   };
 
-  // Gmail SMTP optimization for cloud environments (prevents ENETUNREACH / DNS IPv6 resolution issues)
-  if (host.includes('gmail.com')) {
-    config.service = 'gmail';
+  // If EMAIL_SERVICE is set (e.g., 'gmail'), use Nodemailer's service shortcut
+  if (process.env.EMAIL_SERVICE) {
+    config.service = process.env.EMAIL_SERVICE;
   } else {
     config.host = host;
     config.port = port;
     config.secure = secure;
-  }
+    // Force IPv4 resolution to avoid ENETUNREACH on IPv6‑only environments
+    config.dns = { family: 4 };
+  };
 
   return nodemailer.createTransport(config);
 };
 
 module.exports = createTransporter;
-
