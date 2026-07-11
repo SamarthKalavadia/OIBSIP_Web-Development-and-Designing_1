@@ -22,7 +22,10 @@ const createTransporter = () => {
 
   // If EMAIL_SERVICE is set (e.g., 'gmail'), use Nodemailer's service shortcut
   if (process.env.EMAIL_SERVICE) {
+    // Using the service shortcut forces Nodemailer to use the correct SMTP endpoints for Gmail
     config.service = process.env.EMAIL_SERVICE;
+    // Gmail requires a secure connection
+    config.secure = true;
   } else {
     config.host = host;
     config.port = port;
