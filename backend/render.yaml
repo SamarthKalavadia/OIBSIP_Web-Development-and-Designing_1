@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: project-backend
+    env: node
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    envVars:
+      - key: SMTP_HOST
+      - key: SMTP_PORT
+      - key: SMTP_SECURE
+      - key: SMTP_USER
+      - key: SMTP_PASS
+      - key: SMTP_FROM
+      - key: PORT
